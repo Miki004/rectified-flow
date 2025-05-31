@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import torch.distributions as dist
+
 
 
 def mixture_sample_with_labels(self, sample_shape=torch.Size()):
@@ -33,6 +33,9 @@ class CircularGMM(dist.MixtureSameFamily):
 
 
 # Two-point GMM Class
+import torch
+import torch.nn as nn
+import torch.distributions as dist
 class TwoPointGMM(dist.MixtureSameFamily):
     def __init__(self, x=10.0, y=10.0, std=1.0, device=torch.device("cpu")):
         self.device = device
