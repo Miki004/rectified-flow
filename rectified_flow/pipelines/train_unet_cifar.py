@@ -447,8 +447,8 @@ def main(args):
     transform = transforms.Compose(transform_list)
 
     train_dataset = PairedImageDataset(
-    source_dir='/kaggle/input/rectified-flow2/rectified-flow/rectified_flow/datasets/street_view_images_Bari_Italy', 
-    target_dir='/kaggle/input/rectified-flow2/rectified-flow/rectified_flow/datasets/street_view_images_Shibuya_Tokyo_Japan',
+    source_dir='//kaggle//input//rectified-flow2//rectified-flow//rectified_flow//datasets//street_view_images_Bari_Italy', 
+    target_dir='//kaggle//input//rectified-flow2//rectified-flow//rectified_flow//datasets//street_view_images_Shibuya_Tokyo_Japan',
     transform=transform
 )
 
