@@ -447,8 +447,8 @@ def main(args):
     transform = transforms.Compose(transform_list)
 
     train_dataset = PairedImageDataset(
-    source_dir="rectified_flow\\datasets\\street_view_images_Bari_Italy", 
-    target_dir="rectified_flow\\datasets\\street_view_images_Shibuya_Tokyo_Japan",
+    source_dir='/kaggle/input/rectified-flow2/rectified-flow/rectified_flow/datasets/street_view_images_Bari_Italy', 
+    target_dir='/kaggle/input/rectified-flow2/rectified-flow/rectified_flow/datasets/street_view_images_Shibuya_Tokyo_Japan',
     transform=transform
 )
 
@@ -614,8 +614,6 @@ def main(args):
 
                 x_1, x_0 = batch
                 t = rectified_flow.sample_train_time(x_1.shape[0])
-                print(x_0.shape) #64, 3, 32, 32
-                print(x_1.shape) #64, 3, 512, 512
                 loss = rectified_flow.get_loss(
                     x_0=x_0,
                     x_1=x_1,
