@@ -447,8 +447,8 @@ def main(args):
     transform = transforms.Compose(transform_list)
 
     train_dataset = PairedImageDataset(
-    source_dir="rectified_flow\\datasets\\street_view_images_Bari_Italy", 
-    target_dir="rectified_flow\\datasets\\street_view_images_Shibuya_Tokyo_Japan",
+    source_dir=os.path.join("rectified_flow", "datasets","street_view_images_Bari_Italy"), 
+    target_dir=os.path.join("rectified_flow", "datasets","street_view_images_Shibuya_Tokyo_Japan"),
     transform=transform
 )
 
