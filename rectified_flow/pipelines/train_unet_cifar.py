@@ -35,23 +35,23 @@ from PIL import Image
 import glob
 
 class PairedImageDataset(Dataset):
-    def __init__(self, source_dir, target_dir, transform=None):
+    def __init__(self, source_dir, transform=None):
         self.source_paths = sorted(glob.glob(os.path.join(source_dir, "**","*.*"),recursive=True))
-        self.target_paths = sorted(glob.glob(os.path.join(target_dir, "**","*.*"),recursive=True))
+        #self.target_paths = sorted(glob.glob(os.path.join(target_dir, "**","*.*"),recursive=True))
         self.transform = transform
 
     def __len__(self):
-        return min(len(self.source_paths), len(self.target_paths))
+        return len(self.source_paths)
 
     def __getitem__(self, idx):
         source_img = Image.open(self.source_paths[idx]).convert("RGB")
-        target_img = Image.open(self.target_paths[idx]).convert("RGB")
+        #target_img = Image.open(self.target_paths[idx]).convert("RGB")
 
         if self.transform:
             source_img = self.transform(source_img)
-            target_img = self.transform(target_img)
+            #target_img = self.transform(target_img)
 
-        return target_img, source_img  # x1 = target (Tokyo), x0 = source (Bari)
+        return source_img  # x1 = target (Tokyo), x0 = source (Bari)
 
 class EMAModel:
     def __init__(
@@ -448,7 +448,6 @@ def main(args):
 
     train_dataset = PairedImageDataset(
     source_dir=os.path.join("rectified_flow", "datasets","street_view_images_Bari_Italy"), 
-    target_dir=os.path.join("rectified_flow", "datasets","street_view_images_Shibuya_Tokyo_Japan"),
     transform=transform
 )
 
@@ -612,7 +611,8 @@ def main(args):
 
             with accelerator.accumulate(models_to_accumulate):
 
-                x_1, x_0 = batch
+                x_1 = batch
+                x_0 = torch.rand_like(x_1)
                 t = rectified_flow.sample_train_time(x_1.shape[0])
                 loss = rectified_flow.get_loss(
                     x_0=x_0,
